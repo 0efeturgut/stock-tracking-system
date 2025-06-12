@@ -39,14 +39,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/auth/login",
                         "/v2/api-docs",
                         "/swagger-ui/**",
-                        "/swagger-resources/**"
+                        "/swagger-resources/**",
+                        "/h2-console/**",
+                        "/authenticate"
                 ).permitAll()
                 .anyRequest().permitAll()
+                .and()
+                .headers().frameOptions().disable()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
